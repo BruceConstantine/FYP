@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://java.sun.com/xml/ns/javaee" 
+   xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+   http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+   id="WebApp_ID" version="3.0">
+   
+    <!-- 配置启动IOC容器的Listener -->
+    <!-- needed for ContextLoaderListener 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+-->
+    <!-- Bootstraps the root web application context before servlet initialization 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    -->
+   
+   <!-- 
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+			classpath:applicationContext.xml
+		</param-value>
+  </context-param>
+   
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter> 
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+   -->
+  
+  <!-- 
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>struts-default.xml,struts-plugin.xml,struts.xml</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <session-config>
+    <session-timeout>20</session-timeout>
+  </session-config>
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <welcome-file-list>
+	  <welcome-file>index.html</welcome-file>
+	  <welcome-file>index.htm</welcome-file>
+	  <welcome-file>index.jsp</welcome-file>
+	  <welcome-file>default.html</welcome-file>
+	  <welcome-file>default.htm</welcome-file>
+	  <welcome-file>default.jsp</welcome-file>
+	</welcome-file-list> 
+	 
+	 
+    <filter>
+        <description>配置struts2的核心过滤器</description>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+	 -->
+	 <!-- 对 servlet 的配置 ：-->
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name> 	<!--定制一个Servlet名称-->
+		<servlet-class>local.myjsp.servlet.LoginBusiness</servlet-class><!-- 这里必须是全名！ 上一行定制的那个servlet的类路径 -->
+	</servlet>
+	<servlet-mapping> 
+		<servlet-name>LoginServlet</servlet-name> 	<!-- 必须是MyServlet ，因为要和上面的servlet-name一致才行！ -->		
+		<url-pattern>/loginURL</url-pattern> 		<!-- 用户访问的映射路径 -->	
+		<!-- 有两种方式可以使用*表达式映射去实现多个URL路径映射到同一个servlet上 -->
+		<!-- 1. 以 /*开头的		/abc/*
+			 2. 以 .*为结尾的	*.do
+			 比如 Servlet1 映射到 /abc/*	url-pattern
+			 比如 Servlet2 映射到 /*		url-pattern
+			 比如 Servlet3 映射到 	/abc	url-pattern	
+			 比如 Servlet4 映射到 *.do		url-pattern
+			 问题：
+			 	当请求URL为 /abc/a.html	时, /abc/*(Servlet1)和 /*(Servlet2)都匹配， 但会选/abc/*(Servlet1)，因为/abc/*匹配度高
+			 	当请求URL为 /abc			时，会选Servlet3
+			 	当请求URL为 /abc/a.do	时, servlet4和servlet1和servlet2都匹配，但会选择servlet1，因为匹配是从左到右开始的
+		 -->
+		 <!-- 若某个Servlet的映射路径仅仅为一个正斜杠(/)，那么这个servlet就成为当前web应用程序的缺省Servlet，也就是默认路径 
+		 		凡是当前web.xml文本中找不到<servlet-mapping>匹配的URL, 他的访问就交给缺省Servlet处理-->
+	</servlet-mapping>
+	
+</web-app>

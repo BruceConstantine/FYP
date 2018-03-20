@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+	<base href="${basePath}" />
+	<div class="sidebar" data-background-color="white" data-active-color="danger">
+
+    <!--
+		Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+		Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+	-->
+
+    	<div class="sidebar-wrapper"> 
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    Bruce's Crawler Platform
+                </a>
+            </div> 
+            
+ 			<ul class="nav">
+                <li class="active">
+                    <a href="crawler-flow-maker.jsp">
+                        <i class="ti-pencil-alt2"></i>
+                        <p>Crawler-flow Maker</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="view-crawlers.jsp">
+                        <i class="ti-user"></i>
+                        <p>View My Crawlers</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="tracked-element-status.jsp">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Track-Element Status</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-repository.jsp">
+                        <i class="ti-panel"></i>
+                        <p>Manage Repository</p>
+                    </a>
+                </li>  
+				<li>
+					<a href="settings.jsp">
+						<i class="ti-settings"></i>
+						<p>Settings</p>
+					</a>
+				</li>	
+                <li>
+                    <a href="notifications.html">
+                        <i class="ti-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li> 
+                
+				<li class="active-pro">
+                    <a href="login.jsp">
+                        <i class="ti-export"></i>
+                        <p>Exit</p>
+                    </a>
+                </li>
+            </ul> 
+    	</div>
+    </div>

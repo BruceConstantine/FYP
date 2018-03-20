@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+						<!-- 
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li> 
+                        -->
+                    </ul>
+                </nav>
+				<div class="copyright pull-right">
+					<a target="_blank" href="https://github.com/BruceConstantine">
+                    Copyright &copy; ZHIKANG TIAN (BRUCE) </a>
+                </div>
+            </div>
+        </footer>

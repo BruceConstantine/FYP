@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	
+<hibernate-configuration>
+	<!-- 所有CURD操作的数据都在session对象里存放着(Hibernate通过Session来对数据进行操作	) -->
+	<session-factory> <!-- 注意 一定要按照顺序去写session-factory里的属性-->	
+	
+		<!--1. DB连接四要素 :驱动 URL 用户名 密码 --> 
+		<!-- property里的内容不能随便写，因为要用这个类去创建对象 ： 必须要到(hibernate-release-XX.XX.X.Final/project/etc/)目录里查找文件hibernate.properties（目前直接从Maven配置得到的jar包里面还没有，必须从网上下载压缩文件） -->
+		<!-- 查文档发现如下四要素配置：
+			#hibernate.connection.driver_class com.mysql.jdbc.Driver
+			#hibernate.connection.url jdbc:mysql:///test (等同于 jdbc:mysql://127.0.0.1:3306/test)
+			#hibernate.connection.username gavin
+			#hibernate.connection.password	
+		 -->
+		 <!-- 将下面的移动到 jdbc.properties文件里 
+			<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+			<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/exam?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8</property>
+			<property name="hibernate.connection.username">root</property>
+			<property name="hibernate.connection.password">root</property>
+		 -->
+			 
+		<!--2. 设置数据库方言 -->	
+		<!-- 	注意 数据库方言变化出入很大，不要从文件里直接拷贝，要去hibernate 的 jar包(org.hibernate.dialect)里找,最好是找和当前数据库版本一样的方言 MySQL{版本号}Dialect -->
+			<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>	
+			<!-- 注意! mysql 的坑  org.hibernate.dialect.MySQLDialect是通用的版本，不适用mysql5.7 以上版本，5.7以上的用方言MySQL5InnoDBDialect !注意!--> 
+			
+		<!--3. 注册数据库连接池(ConnectionProvider连接提供者)：数据源 (连接池就是内存里的一种容器，事先创建好一部分数据库连接，放在内存池里，来请求数据连接的request时候就给一个)-->	
+		<!-- 	一般开发的时候，应用服务器和数据库服务器是两个不同的机器,所以一般数据库服务器一般在云上 -->	
+		<!--  	连接池的设置：
+					1. 对于连接池里的连接个数，要有个数限制，有下限和上限：为了提高 效率(提前创建数据库连接，防止用户等待太久) 和 鲁棒性(防止池子里的连接爆满) 
+					2. 资源要适当地释放，连接的空闲时间超时设置 ... ... -->
+		<!-- 这里使用第三方数据库连接池C3p0，避免了上面说的麻烦的配置设计。 C3p0是JDBC 
+				但是这里的值不能直接写文档里的 org.hibernate.connection.C3P0ConnectionProvider。因为和数据库方言设置一致的：不同的版本的实现类不一样
+				这里的类要从hibernate-c3p0-5.2.12.Final.jar包里取，因为这个包是hibernate和c3p0结合用的架构，\c3p0\0.9.5.2\c3p0-0.9.5.2.这个包是c3p0的包，不能去这里面查--> 		
+			<property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+			<property name="hibernate.c3p0.timeout">4500</property>
+
+		<!-- 4.当前回话上下文 （这是最重要的一个类）-->				<!-- thread：保证同一个线程中获取到的session是同一个session-->
+			<property name="hibernate.current_session_context_class">thread</property>	
+			
+			
+		<!-- 5.自动建表: SQL里有 DDL三类-(Create Update)/DML(增删改)/DQL(Query) -->	
+			<property name="hibernate.hbm2ddl.auto">update</property>
+			<!-- create: 每次都是把老表删除掉，建立新的
+				 update: 第一次运行，没有表就建立，建立以后以后每次运行都是更新操作	-->
+				 
+		<!-- 6.显示SQL :常用于调试(但是在一行显示)-->		 
+			<property name="hibernate.show_sql">true</property>
+			<!-- 格式化显示SQL -->
+			<property name="hibernate.format_sql">true</property>	
+			
+			
+		<!-- 7.注册数据库表映射 文件/类 （文件写路径，类写类的全名）-->
+			<mapping  class="com.dx.ssh.entities.Member" ></mapping>
+	</session-factory>
+</hibernate-configuration>	
+	
